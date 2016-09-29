@@ -16,7 +16,7 @@ namespace Graphs.Algorithms {
             dfs.PostStartPostExploredVertexDelegate = IncrementComponents;
             foreach(var vertex in g.GetVertices()) {
                 if (!vertex.Visited)
-                    dfs.Start(vertex);  
+                    dfs.Start();  
             }
             return components;
         }

@@ -5,22 +5,48 @@ namespace Graphs.Algorithms
 {
     public class DFS
     {
+        private class Timer {
+            private int _timeStamp = 0;
+
+            private void Tick() { 
+                _timeStamp += 1;
+            }
+
+            public int CurrentTime() {
+                Tick();
+                return _timeStamp;
+            }
+        }
+
+        private Timer _timer = new Timer();
+
+        public delegate void ProcessDFSDelegate();
         public delegate void ProcessVertexDelegate(Vertex v);
+        private void DoNothing() {}
         private void DoNothing(Vertex v) {}
         public Graph DFSGraph {get; set;}
-        public ProcessVertexDelegate PreStartVertexDelegate {get; set;}
-        public ProcessVertexDelegate PostStartVertexDelegate {get; set;}    
+        public ProcessDFSDelegate PreStartDelegate {get; set;}
+        public ProcessDFSDelegate PostStartDelegate {get; set;}    
         public ProcessVertexDelegate PreExploredVertexDelegate {get; set;}
         public ProcessVertexDelegate PostExploredVertexDelegate {get; set;}
         public ProcessVertexDelegate PostStartPreExploredVertexDelegate {get; set;}
         public ProcessVertexDelegate PostStartPostExploredVertexDelegate {get; set;}
 
+        private void UpdateStartTime(Vertex v) {
+            v.StartTime = _timer.CurrentTime();
+            
+        }
+
+        private void UpdateStopTime(Vertex v) {
+            v.StopTime = _timer.CurrentTime();
+        }
+
         public DFS(Graph g) {
             DFSGraph = g;
-            PreStartVertexDelegate = DoNothing;
-            PostStartVertexDelegate = DoNothing;
-            PreExploredVertexDelegate = DoNothing;
-            PostExploredVertexDelegate = DoNothing;
+            PreStartDelegate = DoNothing;
+            PostStartDelegate = DoNothing;
+            PreExploredVertexDelegate += UpdateStartTime;
+            PostExploredVertexDelegate += UpdateStopTime;
             PostStartPostExploredVertexDelegate = DoNothing;
             PostStartPreExploredVertexDelegate = DoNothing;
         }
@@ -38,22 +64,21 @@ namespace Graphs.Algorithms
             }
         }
 
-        public void Start(Vertex s)
+        public void Start()
         {
             Init();
-            var neighbours = DFSGraph.GetNeighbours(s);
-            PreStartVertexDelegate(s);
-            s.Visited = true;
-            foreach(var neighbour in neighbours) {
-                if (!neighbour.Visited) {
-                    PreExploredVertexDelegate(neighbour);
-                    PostStartPreExploredVertexDelegate(neighbour);
-                    Explore(neighbour);
-                    PostExploredVertexDelegate(neighbour);
-                    PostStartPostExploredVertexDelegate(neighbour);
+            var vertices = DFSGraph.GetVertices();
+            PreStartDelegate();
+            foreach(var vertex in vertices) {
+                if (!vertex.Visited) {
+                    PreExploredVertexDelegate(vertex);
+                    PostStartPreExploredVertexDelegate(vertex);
+                    Explore(vertex);
+                    PostExploredVertexDelegate(vertex);
+                    PostStartPostExploredVertexDelegate(vertex);
                 }
             }
-            PostStartVertexDelegate(s);
+            PostStartDelegate();
         }
 
         // Marks every node as Unvisited.

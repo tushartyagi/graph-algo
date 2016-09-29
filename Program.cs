@@ -9,11 +9,20 @@ namespace Graphs
 {
     public class Program
     {
+        private static int _timeStamp = 0;
+
+        public static int CurrentTimeStamp() {
+            _timeStamp += 1;  // Tick
+            return _timeStamp;
+        }
+
         public static void PostProcess(Vertex v) {
-            Console.WriteLine("Visited vertex: " + v.Name);
+            Console.Write("Visited vertex: {0}.", v.Name);
+            Console.WriteLine("Timestamp: {0}/{1}", v.StartTime, v.StopTime);
         }
         public static void PreProcess(Vertex v) {
-            Console.WriteLine("Visiting vertex: " + v.Name);
+            Console.Write("Visiting vertex: {0}.", v.Name);
+            Console.WriteLine("Timestamp: {0}/{1}", v.StartTime, v.StopTime);
         }
         public static void Main(string[] args)
         {
@@ -40,14 +49,12 @@ namespace Graphs
             .Add(ce)
             .Add(fg);
 
-            /*
+            
             var dfs = new DFS(graph);
-            dfs.PreExploredVertexDelegate = PreProcess;
-            dfs.PostExploredVertexDelegate = PostProcess;
-            dfs.Start(a);
-            */
-            var components = ConnectedComponents.CountComponents(graph);
-            Console.WriteLine(components);
+            dfs.PreExploredVertexDelegate += PreProcess;
+            dfs.PostExploredVertexDelegate += PostProcess;
+            dfs.Start();
+            
         }
     }
 }
