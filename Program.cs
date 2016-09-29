@@ -49,12 +49,17 @@ namespace Graphs
             .Add(ce)
             .Add(fg);
 
-            
+            /*
             var dfs = new DFS(graph);
             dfs.PreExploredVertexDelegate += PreProcess;
             dfs.PostExploredVertexDelegate += PostProcess;
             dfs.Start();
-            
+            */
+            var sort = new TopologicalSort(graph);
+            List<Vertex> vertices = sort.Sort().ToList();
+            foreach (var v in vertices) {
+                Console.WriteLine("Name: {0}, Start: {1}, End: {2}", v.Name, v.StartTime, v.StopTime);
+            }
         }
     }
 }
