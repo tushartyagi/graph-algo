@@ -7,6 +7,12 @@ namespace tushartyagi.graphs
 {
     public class Program
     {
+        public static void PostProcess(Vertex v) {
+            Console.WriteLine("Visited vertex: " + v.Name);
+        }
+        public static void PreProcess(Vertex v) {
+            Console.WriteLine("Visiting vertex: " + v.Name);
+        }
         public static void Main(string[] args)
         {
             Graph g = new AdjListGraph();
@@ -28,7 +34,8 @@ namespace tushartyagi.graphs
             .Add(de)
             .Add(ce);
 
-            DFS.Search(g, a);
+
+            DFS.Search(g, a, PreProcess, PostProcess);
 
             System.Console.WriteLine("Done");
         }

@@ -4,6 +4,8 @@ namespace tushartyagi.graphs
 {
     public static class DFS
     {
+        public delegate void PreprocessVertex(Vertex v);
+        public delegate void PostProcessVertex(Vertex v);
 
         public static void Explore(Graph g, Vertex s)
         {
@@ -16,6 +18,20 @@ namespace tushartyagi.graphs
             }
         }
 
+        public static void Explore(Graph g, Vertex s, 
+            PreprocessVertex preProcess, PostProcessVertex postProcess)
+        {
+            s.Visited = true;
+            var neighbours = g.GetNeighbours(s);
+            foreach(var neighbour in neighbours) {
+                if (!neighbour.Visited) {
+                    preProcess(neighbour);
+                    Explore(g, neighbour, preProcess, postProcess);
+                    postProcess(neighbour);
+                }
+            }
+        }
+        
         public static void Search(Graph g, Vertex s)
         {
             Init(g);
@@ -26,6 +42,23 @@ namespace tushartyagi.graphs
                     Explore(g, neighbour);
                 }
             }
+        }
+
+        public static void Search(Graph g, Vertex s, 
+            PreprocessVertex preProcess, PostProcessVertex postProcess)
+        {
+            Init(g);
+            var neighbours = g.GetNeighbours(s);
+            preProcess(s);
+            s.Visited = true;
+            foreach(var neighbour in neighbours) {
+                if (!neighbour.Visited) {
+                    preProcess(neighbour);
+                    Explore(g, neighbour, preProcess, postProcess);
+                    postProcess(neighbour);
+                }
+            }
+            postProcess(s);
         }
 
         // Marks every node as Unvisited.
