@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Graphs.Data;
+using Graphs.Algorithms;
 
-namespace tushartyagi.graphs
+namespace Graphs
 {
     public class Program
     {
@@ -15,29 +17,37 @@ namespace tushartyagi.graphs
         }
         public static void Main(string[] args)
         {
-            Graph g = new AdjListGraph();
+            Graph graph = new UndirectedAdjListGraph();
             Vertex a = new Vertex("a"),
                 b = new Vertex("b"),
                 c = new Vertex("c"),
                 d = new Vertex("d"),
-                e = new Vertex("e");
+                e = new Vertex("e"),
+                f = new Vertex("f"),
+                g = new Vertex("g");
 
             Edge ab = new Edge(a, b),
                 bc = new Edge(b, c),
                 ad = new Edge(a, d),
                 de = new Edge(d, e),
-                ce = new Edge(c, e);
+                ce = new Edge(c, e),
+                fg = new Edge(f, g);
 
-            g.Add(ab)
+            graph.Add(ab)
             .Add(bc)
             .Add(ad)
             .Add(de)
-            .Add(ce);
+            .Add(ce)
+            .Add(fg);
 
-
-            DFS.Search(g, a, PreProcess, PostProcess);
-
-            System.Console.WriteLine("Done");
+            /*
+            var dfs = new DFS(graph);
+            dfs.PreExploredVertexDelegate = PreProcess;
+            dfs.PostExploredVertexDelegate = PostProcess;
+            dfs.Start(a);
+            */
+            var components = ConnectedComponents.CountComponents(graph);
+            Console.WriteLine(components);
         }
     }
 }
