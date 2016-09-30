@@ -26,7 +26,7 @@ namespace Graphs
         }
         public static void Main(string[] args)
         {
-            Graph graph = new UndirectedAdjListGraph();
+            Graph graph = new DirectedAdjListGraph();
             Vertex a = new Vertex("a"),
                 b = new Vertex("b"),
                 c = new Vertex("c"),
@@ -55,11 +55,23 @@ namespace Graphs
             dfs.PostExploredVertexDelegate += PostProcess;
             dfs.Start();
             */
+
+            /*
             var sort = new TopologicalSort(graph);
             List<Vertex> vertices = sort.Sort().ToList();
             foreach (var v in vertices) {
                 Console.WriteLine("Name: {0}, Start: {1}, End: {2}", v.Name, v.StartTime, v.StopTime);
             }
+            */
+
+            /*
+            var cc = ConnectedComponent.CountComponents(graph);
+            Console.WriteLine(cc);
+            */
+
+            // var components = graph.ConnectedComponents();
+            var reversed = graph.Reverse();
+            Console.Write("Hello");
         }
     }
 }

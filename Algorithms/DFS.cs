@@ -34,7 +34,6 @@ namespace Graphs.Algorithms
 
         private void UpdateStartTime(Vertex v) {
             v.StartTime = _timer.CurrentTime();
-            
         }
 
         private void UpdateStopTime(Vertex v) {
@@ -71,8 +70,8 @@ namespace Graphs.Algorithms
             PreStartDelegate();
             foreach(var vertex in vertices) {
                 if (!vertex.Visited) {
-                    PreExploredVertexDelegate(vertex);
                     PostStartPreExploredVertexDelegate(vertex);
+                    PreExploredVertexDelegate(vertex);
                     Explore(vertex);
                     PostExploredVertexDelegate(vertex);
                     PostStartPostExploredVertexDelegate(vertex);

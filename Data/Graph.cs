@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Graphs.Algorithms;
 
 namespace Graphs.Data
 {
@@ -12,6 +14,17 @@ namespace Graphs.Data
         public int StartTime {get; set;}
         public int StopTime {get; set;}
         public string Name {get; set;}
+
+        public override int GetHashCode() {
+            if (Name == null) return 0;
+            return Name.GetHashCode();
+        }
+
+        public override bool Equals(object obj) {
+            Vertex other = obj as Vertex;
+            return other != null && other.Name == this.Name;
+        }
+
     }
 
     public class Edge {
@@ -22,6 +35,13 @@ namespace Graphs.Data
         }
         public Vertex Vertex1 {get; set;}
         public Vertex Vertex2 {get; set;}
+
+        public Edge Reverse() {
+            // Create new Vertices so these are initialised to unvisited.
+            var v2 = new Vertex(Vertex2.Name);
+            var v1 = new Vertex(Vertex1.Name);
+            return new Edge(v2, v1);
+        }
     }
 
     public abstract class Graph {
@@ -33,6 +53,12 @@ namespace Graphs.Data
         public abstract IEnumerable<Vertex> GetNeighbours(Vertex v);
 
         public abstract IEnumerable<Vertex> GetVertices();
+
+        public abstract IEnumerable<Edge> GetEdges();
+
+        public abstract IEnumerable<IEnumerable<Vertex>> ConnectedComponents();
+
+        public abstract Graph Reverse();
 
     }
 
@@ -62,6 +88,16 @@ namespace Graphs.Data
             return VertexList.Keys;
         }
         
+        override public IEnumerable<Edge> GetEdges() {
+            var edges = new HashSet<Edge>();
+            foreach (var vertex in GetVertices()) {
+               foreach (var neighbour in GetNeighbours(vertex)) {
+                   edges.Add(new Edge(vertex, neighbour));
+               } 
+            }
+            return edges;
+        }
+
         override public Graph Add (Vertex v) {
             VertexList.Add(v, new List<Vertex>());
             return this;
@@ -114,6 +150,32 @@ namespace Graphs.Data
             }
             return false;
         }
+
+        override public IEnumerable<IEnumerable<Vertex>> ConnectedComponents() {
+            var components = new List<List<Vertex>>();
+            var dfs = new DFS(this);
+            List<Vertex> innerList = new List<Vertex>();
+
+            dfs.PostStartPreExploredVertexDelegate += (_) => { 
+                innerList = new List<Vertex>();
+            };
+            
+            dfs.PreExploredVertexDelegate += (v) => {
+                innerList.Add(v);
+            };
+
+            dfs.PostStartPostExploredVertexDelegate += (_) => {
+                components.Add(innerList);
+            };
+
+            dfs.Start();
+
+            return components;
+        }
+
+        override public Graph Reverse() {
+            return this;
+        }
     }
 
     public class DirectedAdjListGraph : AdjListGraph {
@@ -144,6 +206,20 @@ namespace Graphs.Data
             } 
             return false;
         }
+
+        override public IEnumerable<IEnumerable<Vertex>> ConnectedComponents() {
+
+            return new List<List<Vertex>>();
+        }
+
+        override public Graph Reverse() {
+            Graph clone = new DirectedAdjListGraph();
+            foreach (var edge in this.GetEdges())
+            {
+                clone.Add(edge.Reverse());
+            }
+            return clone;
+        }
     }
 
     public class AdjMatrixGraph : Graph {
@@ -170,6 +246,18 @@ namespace Graphs.Data
 
         override public bool Contains(Edge e) {
             return true;
+        }
+
+        override public IEnumerable<IEnumerable<Vertex>> ConnectedComponents() {
+            return new List<List<Vertex>>();
+        }
+
+        override public IEnumerable<Edge> GetEdges() {
+            return new List<Edge>();
+        }
+
+        override public Graph Reverse() {
+            return this;
         }
     }
 }
