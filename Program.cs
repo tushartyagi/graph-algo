@@ -1,9 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Graphs.Data;
-using Graphs.Algorithms;
 
 namespace Graphs
 {
@@ -69,8 +65,9 @@ namespace Graphs
             Console.WriteLine(cc);
             */
 
-            // var components = graph.ConnectedComponents();
-            var reversed = graph.Reverse();
+            var components = graph.ConnectedComponents();
+            
+            // var reversed = graph.Reverse();
             Console.Write("Hello");
         }
     }
