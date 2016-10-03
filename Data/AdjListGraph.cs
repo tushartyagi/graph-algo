@@ -11,6 +11,13 @@ namespace Graphs.Data {
             }
         }
 
+        override public Graph Add(List<Edge> edges) {
+            foreach(var edge in edges) {
+                this.Add(edge);
+            }
+            return this;
+        } 
+
        override public Vertex GetVertexById(string id) {
             foreach (var vertex in VertexList.Keys) {
                 if (vertex.Name == id)

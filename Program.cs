@@ -1,5 +1,6 @@
 using System;
 using Graphs.Data;
+using System.Collections.Generic;
 
 namespace Graphs
 {
@@ -63,19 +64,8 @@ namespace Graphs
                 gh = new Edge(g, h),
                 ec = new Edge(e, c);
 
-            graph.Add(ab)
-            .Add(ae)
-            .Add(bc)
-            .Add(bd)
-            .Add(ca)
-            .Add(fg)
-            .Add(fa)
-            .Add(id)
-            .Add(hi)
-            .Add(hc)
-            .Add(hg)
-            .Add(gh)
-            .Add(ec);
+            graph.Add(new List<Edge>{ab,ae,bc,bd,ca,fg,fa,id,hi,hc,hg,gh,ec});
+
             /*
             var dfs = new DFS(graph);
             dfs.PreExploredVertexDelegate += PreProcess;

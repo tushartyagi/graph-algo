@@ -5,6 +5,10 @@ namespace Graphs.Data {
         //TODO: Change this to a matrix
         public Dictionary<Vertex, List<Vertex>> adjList;
 
+        override public Graph Add(List<Edge> edges) {
+            return this;
+        }
+
         override public Vertex GetVertexById(string id) {
             foreach (var vertex in adjList.Keys) {
                 if (vertex.Name == id)
