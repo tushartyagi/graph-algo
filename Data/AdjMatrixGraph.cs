@@ -5,6 +5,14 @@ namespace Graphs.Data {
         //TODO: Change this to a matrix
         public Dictionary<Vertex, List<Vertex>> adjList;
 
+        override public Vertex GetVertexById(string id) {
+            foreach (var vertex in adjList.Keys) {
+                if (vertex.Name == id)
+                    return vertex;
+            }
+            throw new System.Exception("Element not found: " + id);
+        }
+
         override public IEnumerable<Vertex> GetNeighbours(Vertex v) {
             return new List<Vertex>();
         }

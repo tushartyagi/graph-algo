@@ -4,11 +4,19 @@ namespace Graphs.Data {
     public abstract class AdjListGraph : Graph {
         private Dictionary<Vertex, List<Vertex>> adjList =
             new Dictionary<Vertex, List<Vertex>>();
-        
+
         public Dictionary<Vertex, List<Vertex>> VertexList {
             get {
                 return adjList;
             }
+        }
+
+       override public Vertex GetVertexById(string id) {
+            foreach (var vertex in VertexList.Keys) {
+                if (vertex.Name == id)
+                    return vertex;
+            }
+            throw new System.Exception("Element not found: " + id);
         }
 
         override public IEnumerable<Vertex> GetNeighbours(Vertex v) {

@@ -18,6 +18,7 @@ namespace Graphs.Algorithms
             }
         }
 
+#region Declarations
         private Timer _timer = new Timer();
 
         public delegate void ProcessDFSDelegate();
@@ -39,6 +40,7 @@ namespace Graphs.Algorithms
         private void UpdateStopTime(Vertex v) {
             v.StopTime = _timer.CurrentTime();
         }
+#endregion
 
         public DFS(Graph g) {
             DFSGraph = g;
@@ -58,6 +60,7 @@ namespace Graphs.Algorithms
                 if (!neighbour.Visited) {
                     PreExploredVertexDelegate(neighbour);
                     Explore(neighbour);
+                    neighbour.Visited = true;
                     PostExploredVertexDelegate(neighbour);
                 }
             }
@@ -73,6 +76,7 @@ namespace Graphs.Algorithms
                     PostStartPreExploredVertexDelegate(vertex);
                     PreExploredVertexDelegate(vertex);
                     Explore(vertex);
+                    vertex.Visited = true;
                     PostExploredVertexDelegate(vertex);
                     PostStartPostExploredVertexDelegate(vertex);
                 }

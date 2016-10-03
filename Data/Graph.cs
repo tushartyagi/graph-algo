@@ -3,6 +3,8 @@ using System.Collections.Generic;
 namespace Graphs.Data
 {
     public abstract class Graph {
+
+        public abstract Vertex GetVertexById (string id);
         public abstract Graph Add (Vertex v);
         public abstract Graph Add (Edge e);
         public abstract bool Contains(Vertex v);

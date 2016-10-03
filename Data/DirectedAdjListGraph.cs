@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Graphs.Algorithms;
 
 namespace Graphs.Data {
-        public class DirectedAdjListGraph : AdjListGraph {
+    public class DirectedAdjListGraph : AdjListGraph {
 
         override public Graph Add (Edge e) {
             // This needs to add only this edge in the list, not the reverse
@@ -14,6 +14,15 @@ namespace Graphs.Data {
             } 
             else {
                 VertexList.Add(vertex1, new List<Vertex>{ vertex2 });
+            }
+
+            // The second vertex also needs to be added to the adjList,
+            // because even if the edge is directed, the vertex needs to
+            // be present in the list for the record.
+            // AB will add both A -> B and B -> {} in the list for 
+            // recording.
+            if (!VertexList.ContainsKey(vertex2)) {
+                VertexList.Add(vertex2, new List<Vertex>());
             }
 
             return this;
@@ -31,37 +40,52 @@ namespace Graphs.Data {
             return false;
         }
 
+        private void Assign(Vertex v, Vertex root, IEnumerable<IEnumerable<Vertex>> components) {
+
+        }
+
+        /* This is a 3 step algo:
+            1. Do a DFS of the graph to give postorder timings to each node.
+            2. Reverse the graph.
+            3. From the order found in step 1, start doing a DFS/Exploration 
+            of the reversed graph. Each vertex which can be visited from a 
+            given one belong to the same SCC.
+        */
         override public IEnumerable<IEnumerable<Vertex>> ConnectedComponents() {
-            var reversed = this.Reverse();
-            var dfsOfReverse = new DFS(reversed);
-            dfsOfReverse.Start();
-            
-            var topologicalSort = new TopologicalSort(reversed);
-            var reversedPostList = topologicalSort.Sort();
-            var currentComponent = 0; // Seed value.
             var components = new List<List<Vertex>>();
+            var currentComponent = 0; // Seed value.
             List<Vertex> innerList = new List<Vertex>();
 
-            var exploringDFS = new DFS(this);
+            
+            // Step 1. Topological sort runs a DFS and arranges the nodes 
+            // in postorder.
+            var topologicalSort = new TopologicalSort(this);
+            var topologicalVertices = topologicalSort.Sort();
+            
+            // Step 2. Prepare the reversed graph to collect vertices in teh 
+            // same SCC.
+            var reversed = this.Reverse();
+            var exploringDFS = new DFS(reversed);
             exploringDFS.PostExploredVertexDelegate = (v) => {
                 v.Component = currentComponent;
                 innerList.Add(v);
             };
 
-            // TopologicalSort has marked all the nodes as visited, but 
-            // below we need this flag to be unset for all nodes.
-            this.ClearVisited();
-            foreach(var vertex in reversedPostList) vertex.Visited = false;
-
-            foreach (var vertex in reversedPostList)
+            // Step 3
+            foreach (var topologicalVertex in topologicalVertices)
             {
                 innerList = new List<Vertex>();
-                if (!vertex.Visited) {
+                var vertexInGraph = reversed.GetVertexById(topologicalVertex.Name);
+                if (!vertexInGraph.Visited) {
                     currentComponent += 1;
-                    exploringDFS.Explore(vertex);
+                    vertexInGraph.Component = currentComponent;
+                    innerList.Add(vertexInGraph);
+                    
+                    exploringDFS.Explore(vertexInGraph);
                     components.Add(innerList);
                 }
             }
+
             return components;
         }
 
@@ -71,6 +95,7 @@ namespace Graphs.Data {
             {
                 reversed.Add(edge.Reverse());
             }
+            reversed.ClearVisited();
             return reversed;
         }
     }
