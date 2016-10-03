@@ -29,8 +29,11 @@ namespace Graphs
                 d = new Vertex("d"),
                 e = new Vertex("e"),
                 f = new Vertex("f"),
-                g = new Vertex("g");
+                g = new Vertex("g"),
+                h = new Vertex("h"),
+                i = new Vertex("i");
 
+/*
             Edge ab = new Edge(a, b),
                 bc = new Edge(b, c),
                 ad = new Edge(a, d),
@@ -44,7 +47,35 @@ namespace Graphs
             .Add(de)
             .Add(ce)
             .Add(fg);
+*/
 
+            Edge ab = new Edge(a, b),
+                ae = new Edge(a, e),    
+                bc = new Edge(b, c),
+                bd = new Edge(b, d),
+                ca = new Edge(c, a),
+                fg = new Edge(f, g),
+                fa = new Edge(f, a),
+                id = new Edge(i, d),
+                hi = new Edge(h, i),
+                hc = new Edge(h, c),
+                hg = new Edge(h, g),
+                gh = new Edge(g, h),
+                ec = new Edge(e, c);
+
+            graph.Add(ab)
+            .Add(ae)
+            .Add(bc)
+            .Add(bd)
+            .Add(ca)
+            .Add(fg)
+            .Add(fa)
+            .Add(id)
+            .Add(hi)
+            .Add(hc)
+            .Add(hg)
+            .Add(gh)
+            .Add(ec);
             /*
             var dfs = new DFS(graph);
             dfs.PreExploredVertexDelegate += PreProcess;

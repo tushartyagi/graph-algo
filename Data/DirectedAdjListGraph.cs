@@ -80,7 +80,7 @@ namespace Graphs.Data {
                     currentComponent += 1;
                     vertexInGraph.Component = currentComponent;
                     innerList.Add(vertexInGraph);
-                    
+
                     exploringDFS.Explore(vertexInGraph);
                     components.Add(innerList);
                 }

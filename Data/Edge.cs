@@ -10,9 +10,7 @@ namespace Graphs.Data {
 
         public Edge Reverse() {
             // Create new Vertices so these are initialised to unvisited.
-            var v2 = new Vertex(Vertex2.Name);
-            var v1 = new Vertex(Vertex1.Name);
-            return new Edge(v2, v1);
+            return new Edge(Vertex2, Vertex1);
         }
     }
 }
