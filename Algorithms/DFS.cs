@@ -5,6 +5,7 @@ namespace Graphs.Algorithms
 {
     public class DFS
     {
+#region Declarations
         private class Timer {
             private int _timeStamp = 0;
 
@@ -18,7 +19,7 @@ namespace Graphs.Algorithms
             }
         }
 
-#region Declarations
+
         private Timer _timer = new Timer();
 
         public delegate void ProcessDFSDelegate();
@@ -84,13 +85,11 @@ namespace Graphs.Algorithms
             PostStartDelegate();
         }
 
-        // Marks every node as Unvisited.
-        // TODO: Make this generic; allow passing in of a delegate
         public void Init()
         {
-            // Do nothing right now. Just imagine that each node 
-            // has already been marked unvisited (because we mark 
-            // it that way during construction).
+            DFSGraph.Init((v) => {
+                v.Visited = false;
+            });
         }
     }
 }

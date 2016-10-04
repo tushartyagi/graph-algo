@@ -6,6 +6,14 @@ namespace Graphs.Data {
         private Dictionary<Vertex, List<Vertex>> adjList =
             new Dictionary<Vertex, List<Vertex>>();
 
+        override public void Init(Action<Vertex> f) {
+            foreach (var vertex in this.GetVertices()) {
+                foreach (var neighbour in this.GetNeighbours(vertex)) {
+                    f(neighbour);
+                }
+            }
+        }
+
         public Dictionary<Vertex, List<Vertex>> VertexList {
             get {
                 return adjList;
@@ -68,13 +76,7 @@ namespace Graphs.Data {
             }
         }
 
-        override public void Init(Action<Vertex> f) {
-            foreach (var vertex in this.GetVertices()) {
-                foreach (var neighbour in this.GetNeighbours(vertex)) {
-                    f(neighbour);
-                }
-            }
-        }
+        
 
     }
 }

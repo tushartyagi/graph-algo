@@ -1,9 +1,14 @@
 using System.Collections.Generic;
+using System;
 
 namespace Graphs.Data {
     public class AdjMatrixGraph : Graph {
         //TODO: Change this to a matrix
         public Dictionary<Vertex, List<Vertex>> adjList;
+
+        override public void Init(Action<Vertex> f) {
+            
+        }
 
         override public Graph Add(List<Edge> edges) {
             return this;
