@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 
 namespace Graphs.Data {
     public abstract class AdjListGraph : Graph {
@@ -63,6 +64,14 @@ namespace Graphs.Data {
                 vertex.Visited = false;
                 foreach (var neighbour in GetNeighbours(vertex)) {
                     neighbour.Visited = false;
+                }
+            }
+        }
+
+        override public void Init(Action<Vertex> f) {
+            foreach (var vertex in this.GetVertices()) {
+                foreach (var neighbour in this.GetNeighbours(vertex)) {
+                    f(neighbour);
                 }
             }
         }

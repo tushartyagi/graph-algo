@@ -1,6 +1,7 @@
 using System;
 using Graphs.Data;
 using System.Collections.Generic;
+using Graphs.Algorithms;
 
 namespace Graphs
 {
@@ -23,7 +24,7 @@ namespace Graphs
         }
         public static void Main(string[] args)
         {
-            Graph graph = new DirectedAdjListGraph();
+            Graph graph = new UndirectedAdjListGraph();
             Vertex a = new Vertex("a"),
                 b = new Vertex("b"),
                 c = new Vertex("c"),
@@ -32,7 +33,8 @@ namespace Graphs
                 f = new Vertex("f"),
                 g = new Vertex("g"),
                 h = new Vertex("h"),
-                i = new Vertex("i");
+                i = new Vertex("i"),
+                s = new Vertex("s");
 
 /*
             Edge ab = new Edge(a, b),
@@ -49,7 +51,8 @@ namespace Graphs
             .Add(ce)
             .Add(fg);
 */
-
+            /* 
+            //Edges for DFS
             Edge ab = new Edge(a, b),
                 ae = new Edge(a, e),    
                 bc = new Edge(b, c),
@@ -65,6 +68,23 @@ namespace Graphs
                 ec = new Edge(e, c);
 
             graph.Add(new List<Edge>{ab,ae,bc,bd,ca,fg,fa,id,hi,hc,hg,gh,ec});
+            */
+
+            // Edges for BFS
+            Edge sa = new Edge(s, a),
+                ab = new Edge(a, b),
+                sc = new Edge(s, c),
+                bc = new Edge(b, c),
+                bg = new Edge(b, g),
+                bh = new Edge(b, h),
+                gh = new Edge(g, h),
+                fg = new Edge(f, g),
+                df = new Edge(d, f),
+                ed = new Edge(e, d),
+                es = new Edge(e, s),
+                ds = new Edge(d, s);
+
+            graph.Add(new List<Edge>{sa, ab, sc, bc, bg, bh, gh, fg, df, ed, es, ds});
 
             /*
             var dfs = new DFS(graph);
@@ -86,8 +106,12 @@ namespace Graphs
             Console.WriteLine(cc);
             */
 
-            var components = graph.ConnectedComponents();
+            //var components = graph.ConnectedComponents();
             
+            var BFS = new BFS(graph);
+            BFS.Start(s);
+
+
             // var reversed = graph.Reverse();
             Console.Write("Hello");
         }

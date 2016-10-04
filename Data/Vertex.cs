@@ -1,5 +1,10 @@
 namespace Graphs.Data
 {
+    public enum Color {
+        White,
+        Grey,
+        Black
+    }
     public class Vertex {
 
         public Vertex (string name, bool visited=false) {
@@ -11,6 +16,9 @@ namespace Graphs.Data
         public int StopTime {get; set;}
         public string Name {get; set;}
         public int Component {get; set;}  
+        public int Distance {get; set; }
+        public Vertex Previous;
+        public Color Color;
 
         public override int GetHashCode() {
             if (Name == null) return 0;

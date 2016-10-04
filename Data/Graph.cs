@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using System;
 
 namespace Graphs.Data
 {
     public abstract class Graph {
-
+        public abstract void Init(Action<Vertex> function);
         public abstract Vertex GetVertexById (string id);
         public abstract Graph Add (List<Edge> edges);
         public abstract Graph Add (Vertex v);
@@ -16,5 +17,6 @@ namespace Graphs.Data
         public abstract IEnumerable<IEnumerable<Vertex>> ConnectedComponents();
         public abstract Graph Reverse();
         public abstract void ClearVisited();
+
     }
 }
