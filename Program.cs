@@ -2,6 +2,7 @@ using System;
 using Graphs.Data;
 using System.Collections.Generic;
 using Graphs.Algorithms;
+using Data.Structures;
 
 namespace Graphs
 {
@@ -108,12 +109,11 @@ namespace Graphs
 
             //var components = graph.ConnectedComponents();
             
+            /*
             var BFS = new BFS(graph);
             BFS.Start(s);
+            */
 
-
-            // var reversed = graph.Reverse();
-            Console.Write("Hello");
         }
     }
 }
