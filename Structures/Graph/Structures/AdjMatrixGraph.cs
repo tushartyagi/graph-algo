@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System;
 
-namespace Graphs.Data {
+namespace Graphs.Structures {
     public class AdjMatrixGraph : Graph {
         //TODO: Change this to a matrix
         public Dictionary<Vertex, List<Vertex>> adjList;

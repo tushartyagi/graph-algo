@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System;
 
-namespace Graphs.Data
+namespace Graphs.Structures
 {
     public abstract class Graph {
         public abstract void Init(Action<Vertex> function);

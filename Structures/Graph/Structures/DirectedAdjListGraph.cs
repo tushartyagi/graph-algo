@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Graphs.Algorithms;
 
-namespace Graphs.Data {
+namespace Graphs.Structures {
     public class DirectedAdjListGraph : AdjListGraph {
 
         override public Graph Add (Edge e) {

@@ -3,23 +3,16 @@ using Math=System.Math;
 using System;
 
 namespace Data.Structures {
-    public class PQNode<T> {
-        public T Node {get; set;}
-        public int Priority {get; set;}
-    }
-
     /* 
     PriorityQueue: This internally uses a list/array of elements and 
     satisfies the min heap property: A[Parent(i)] <= A[i].
     The smallest element of the heap is at the root, so O(1) access time.
     */
-    public class PriorityQueue<T> where T : IComparable<T> {
+    public class PriorityQueue<T> where T: IComparable<T>, IEquatable<T> {
 
         private List<T> _elements = new List<T>();
 
-        public PriorityQueue() {
-
-        }
+        public PriorityQueue() { }
         public PriorityQueue(List<T> elements) {
             foreach (var element in elements)
             {
@@ -77,6 +70,23 @@ namespace Data.Structures {
             _elements.Add(element);
             var elementPos = Count - 1;
             BubbleUp(elementPos);
+        }
+
+        public void Update(T element, T newElement) {
+            var pos = Position(element);
+            _elements.RemoveAt(pos);
+            Insert(newElement);
+        }
+
+        private int Position(T element) {
+            var pos = 0;
+            foreach(var e in _elements) {
+                if (e.Equals(element)) {
+                    return pos;
+                }
+                pos += 1;
+            }
+            throw new Exception("Element not found");
         }
 
         // If the child is less than the parent, then exchange the 

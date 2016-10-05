@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System;
 
-namespace Graphs.Data {
+namespace Graphs.Structures {
     public abstract class AdjListGraph : Graph {
         private Dictionary<Vertex, List<Vertex>> adjList =
             new Dictionary<Vertex, List<Vertex>>();

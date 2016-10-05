@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Graphs.Data;
+using Graphs.Structures;
 
 namespace Graphs.Algorithms {
 

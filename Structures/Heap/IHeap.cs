@@ -6,4 +6,8 @@ namespace Data.Structures {
         T Extract();
         void Insert(T element);
     }
+
+    public interface IPriorityQueue {
+        int Priority {get; set;}
+    }
 }

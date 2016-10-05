@@ -1,5 +1,5 @@
 using System;
-using Graphs.Data;
+using Graphs.Structures;
 using System.Collections.Generic;
 using Graphs.Algorithms;
 using Data.Structures;
@@ -8,23 +8,10 @@ namespace Graphs
 {
     public class Program
     {
-        private static int _timeStamp = 0;
 
-        public static int CurrentTimeStamp() {
-            _timeStamp += 1;  // Tick
-            return _timeStamp;
-        }
-
-        public static void PostProcess(Vertex v) {
-            Console.Write("Visited vertex: {0}.", v.Name);
-            Console.WriteLine("Timestamp: {0}/{1}", v.StartTime, v.StopTime);
-        }
-        public static void PreProcess(Vertex v) {
-            Console.Write("Visiting vertex: {0}.", v.Name);
-            Console.WriteLine("Timestamp: {0}/{1}", v.StartTime, v.StopTime);
-        }
         public static void Main(string[] args)
         {
+            /*
             Graph graph = new UndirectedAdjListGraph();
             Vertex a = new Vertex("a"),
                 b = new Vertex("b"),
@@ -36,7 +23,7 @@ namespace Graphs
                 h = new Vertex("h"),
                 i = new Vertex("i"),
                 s = new Vertex("s");
-
+*/
 /*
             Edge ab = new Edge(a, b),
                 bc = new Edge(b, c),
@@ -71,6 +58,7 @@ namespace Graphs
             graph.Add(new List<Edge>{ab,ae,bc,bd,ca,fg,fa,id,hi,hc,hg,gh,ec});
             */
 
+/*
             // Edges for BFS
             Edge sa = new Edge(s, a),
                 ab = new Edge(a, b),
@@ -86,7 +74,7 @@ namespace Graphs
                 ds = new Edge(d, s);
 
             graph.Add(new List<Edge>{sa, ab, sc, bc, bg, bh, gh, fg, df, ed, es, ds});
-
+*/
             /*
             var dfs = new DFS(graph);
             dfs.PreExploredVertexDelegate += PreProcess;
@@ -113,6 +101,15 @@ namespace Graphs
             var BFS = new BFS(graph);
             BFS.Start(s);
             */
+
+            var list = new List<PQNode<int>>{
+                new PQNode<int>(18, 18),
+                new PQNode<int>(16, 16),
+                new PQNode<int>(12, 12),
+                new PQNode<int>(6, 6),
+            };
+
+            var q = new PriorityQueue<PQNode<int>>(list);
 
         }
     }

@@ -1,4 +1,4 @@
-namespace Graphs.Data
+namespace Graphs.Structures
 {
     public enum Color {
         White,

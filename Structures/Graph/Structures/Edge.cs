@@ -1,4 +1,4 @@
-namespace Graphs.Data {
+namespace Graphs.Structures {
     public class Edge {
 
         public Edge(Vertex v1, Vertex v2) {
